@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="extra_script/bootstrap.bundle.min.js"></script>
+    <title>Linear Algebra Problems Solver</title>
+  </head>
+  <body>
+    
+    <h1>Linear Systems Solver</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <form>
+            <div class="mb-3">
+              <label for="matrix-order" class="form-label">Matrix Order:</label>
+              <input type="number" class="form-control" id="matrix-order" min="0" aria-describedby="emailHelp">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">ICOD:</label>
+              <select class="form-select" aria-label="Default select example">
+                
+                <option value="1">1 - LU decomposition</option>
+                <option value="2">2 - Cholesky's decomposition</option>
+                <option value="3">3 - Jacobi's interative procedure</option>
+                <option value="4">4 - Gauss-Seidel iterative procedure</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="matrix-order" class="form-label">Max Tolerance:</label>
+              <input type="number" class="form-control" id="max-tolerance" min="0" >
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check to calculate Determinant</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="index.html" class="btn btn-primary">Back</a>
+          </form>
+        </div>
+      </div> 
+        
+      <div class="row justify-content-md-center">
+        <div class="col col-lg-2">
+          
+        </div>
+      </div>
+      
+      
+    </div>
+    
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer.js"></script>
+  </body>
+</html>
