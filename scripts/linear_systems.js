@@ -18,7 +18,7 @@ $(() => {
             $('#error-div').empty()
             line=0
             count = 0
-            for(k = 0; k<matrix_elements.length; k++){
+            for(let k = 0; k<matrix_elements.length; k++){
                 column = k%n
                 matrix_a[line][column] = parseFloat(matrix_elements[k])
                 count += 1
@@ -47,13 +47,16 @@ $(() => {
             print_error('Expected ' + n + ' elements in vector B, but found '+vector_elements.length)
         }
     })
+
+    $('#solve').click(function() {solve()})
+
     function init_vector_b_matrix_a(){
         matrix_a = new Array(n)
         vector_b = new Array(n)
-        for (i = 0; i < n; i++){
+        for (let i = 0; i < n; i++){
             vector_b[i] = 0
             matrix_a[i] = new Array(n)
-            for(j = 0; j<n; j++){
+            for(let j = 0; j<n; j++){
                 matrix_a[i][j] = 0
             }
         }
@@ -92,6 +95,75 @@ $(() => {
         $('#error-div').append('<div class="alert alert-danger" role="alert">' + error_message +'</div>')
     }
 
+    function solve(){
+        switch ($('#icod').val()){
+            case "1":
+                console.log(lu_decomposition())
+        }     
+
+    }
+
+    function lu_decomposition(){
+        result = [...matrix_a]
+        for(let k = 0; k < n; k++){
+            for(let i = k+1; i < n; i++){
+                result[i][k] = result[i][k]/result[k][k]
+            }
+            for(let j= k+1; j < n; j++){
+                for(let i = k+1; i < n; i++){
+                    result[i][j] = result[i][j]-result[i][k]*result[k][j]
+                }
+            }
+
+        }
+        vector_y = forward_substitution(result, vector_b)
+        vector_x = backward_substitution(get_transposed(result), vector_y)
+        return vector_x
+    }
+
+    function forward_substitution(matrix, vector){
+        n_rows = matrix.length
+        vector_y = new Array(n_rows)
+        
+        vector_y[0] = vector[0]
+
+        for(let i=0; i<n_rows;i++)
+        {
+            accumulation = vector[i]
+            for(let j=0; j<i; j++){
+                accumulation -= matrix[i][j] * vector_y[j]
+            }
+            vector_y[i] = accumulation
+        }
+        return vector_y
+    }
+
+    function backward_substitution(matrix, vector_y){
+        n_rows = matrix.length
+        vector_x = new Array(n_rows)
+        vector_x[ n_rows-1] = vector_y[n_rows-1] /matrix[n_rows-1][n_rows-1]
+        for (let i = (n_rows - 2); i >= 0; i--) {
+            accumulation = vector_y[i]
+            for(let j=i+1; j<n_rows; j++){
+                accumulation -= matrix[i][j] * vector_x[j] 
+            }
+            vector_x[i] = accumulation/matrix[i][i]
+        }
+        return vector_x
+    }
+
+    function get_transposed(matrix){
+        n_rows = matrix.length
+        transposed = new Array(n_rows)
+        for(let i=0; i<n_rows;i++){
+            transposed[i] = new Array(n_rows)
+            for(let j=0;j<n_rows;j++){
+                transposed[i][j] = matrix[j][i]
+            }
+        }
+        console.log(transposed)
+        return transposed
+    }
 
 })
   
