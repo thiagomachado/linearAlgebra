@@ -75,11 +75,14 @@ function subtract_matrix(matrix_a, matrix_b){
 }
 
 //A*B = C
-function multiply_matrix(matrix_a, matrix_b){
+function multiply_matrix(matrix_a, matrix_b, is_b_vector){
     let matrix_c = [];
-
+    
     let rCount = matrix_a.length;
-    let cCount = matrix_b[0].length;
+    var cCount = matrix_b[0].length;
+    if(is_b_vector){
+        cCount = matrix_b.length;
+    }
 
     for (let i = 0; i < rCount; i++) {
         let row = [];
@@ -89,7 +92,12 @@ function multiply_matrix(matrix_a, matrix_b){
             
             let cell = 0;
             for (let k = 0; k < rCount; k++) {
-                cell = cell + row_matrix_a[k] * matrix_b[k][j];
+                
+                if(is_b_vector){
+                    cell = cell + row_matrix_a[k] * matrix_b[k];}
+                else{
+                    cell = cell + row_matrix_a[k] * matrix_b[k][j];
+                }
             }
             
             row.push(cell);

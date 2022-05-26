@@ -1,5 +1,6 @@
 import * as utils from "./utils.js";
 import * as basic from "./matrix_basic_operations.js"
+
 var n = 0;
 var matrix_a = [];
 var vector_b = [];
@@ -138,6 +139,10 @@ $(() => {
         var result = basic.clone(matrix_a)
         for(let k = 0; k < n; k++){
             for(let i = k+1; i < n; i++){
+                if(result[k][k] == 0){
+                    print_error("Matrix needs pivoting")
+                    return "Error"
+                }
                 result[i][k] = result[i][k]/result[k][k]
             }
             for(let j= k+1; j < n; j++){
@@ -147,8 +152,31 @@ $(() => {
             }
     
         }
-        let vector_y = utils.forward_substitution(result, vector_b)
-        let vector_x = utils.backward_substitution(basic.get_transposed(result), vector_y)
+
+        let matrix_l = []
+        let matrix_u = []
+        for(let i = 0; i < n; i++){
+            let row_l = []
+            let row_u = []
+            for(let j = 0; j < n; j++){
+                if(i==j){
+                    row_l.push(1)
+                    row_u.push(result[i][j])
+                }if(i>j){
+                    row_l.push(result[i][j])
+                    row_u.push(0)
+                }if(i<j){
+                    row_u.push(result[i][j])
+                    row_l.push(0)
+                }
+            }
+            matrix_l.push(row_l)
+            matrix_u.push(row_u)
+        }
+
+        console.log({L:matrix_l, U:matrix_u})
+        let vector_y = utils.forward_substitution(matrix_l, vector_b)
+        let vector_x = utils.backward_substitution(matrix_u, vector_y)
         
         draw_determinant(determinant)
         return vector_x
