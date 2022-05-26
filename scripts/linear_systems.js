@@ -227,6 +227,7 @@ $(() => {
         let vector_y = utils.forward_substitution(matrix_l, vector_b)
         let vector_x = utils.backward_substitution(matrix_u, vector_y)
 
+        draw_determinant(determinant)
         return vector_x
     }
 
