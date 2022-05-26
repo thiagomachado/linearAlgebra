@@ -46,7 +46,7 @@
               <input type="number" class="form-control" id="max-tolerance" min="0" >
             </div>
             <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <input type="checkbox" class="form-check-input" id="check-determinant">
               <label class="form-check-label" for="exampleCheck1">Check to calculate Determinant</label>
             </div>
             <div  class="mb-3" id="matrix-a-div">
@@ -76,16 +76,23 @@
             <a href="index.html" class="btn btn-danger">Back</a>
           </form>
         </div>
-      </div> 
-      <div  class="mb-3" id="vector-x-div">
-        <table id="vector-x-table" class="table table-sm table-striped">
-          <thead id="vector-x-table-head">
-            
-          </thead>
-          <tbody id="vector-x-table-body">
-            
-          </tbody>
-        </table>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div id="results">
+            <div  class="mb-3" id="vector-x-div">
+              <div id="determinant-text"></div>
+              <table id="vector-x-table" class="table table-sm table-striped">
+                <thead id="vector-x-table-head">
+                  
+                </thead>
+                <tbody id="vector-x-table-body">
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>                    
     </div>
     

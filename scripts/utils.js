@@ -1,15 +1,3 @@
-function get_transposed(matrix){
-    var n_rows = matrix.length
-    var transposed = new Array(n_rows)
-    for(let i=0; i<n_rows;i++){
-        transposed[i] = new Array(n_rows)
-        for(let j=0;j<n_rows;j++){
-            transposed[i][j] = matrix[j][i]
-        }
-    }    
-    return transposed
-}
-
 function forward_substitution(matrix, vector){
     var n_rows = matrix.length
     var vector_y = new Array(n_rows)
@@ -45,20 +33,19 @@ function backward_substitution(matrix, vector_y){
 
 function get_determinant(matrix) {
     var n = matrix.length;
-
-    if (n === 1) {
-        return matrix[0][0];
-    }
-
-    if (n === 2) {
-        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-    }
-
     var determinant = 0;
-
-    for (var j = 0; j < n; j++) {
-        determinant += matrix[0][j] * cofactor(matrix, j);
-    }
+    switch (n){
+        case 1:
+            determinant = matrix[0][0];
+            break;
+        case 2:
+            determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+            break;
+        default:
+            for (var j = 0; j < n; j++) {
+                determinant += matrix[0][j] * cofactor(matrix, j);
+            }
+        }
 
     return determinant;
 }
@@ -82,4 +69,4 @@ function cofactor(matrix, column) {
     return (column % 2 ? -1 : 1) * get_determinant(sub_matrix);
 }
 
-export {backward_substitution, forward_substitution, get_transposed, get_determinant}
+export {backward_substitution, forward_substitution, get_determinant}

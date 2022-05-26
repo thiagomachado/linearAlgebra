@@ -1,4 +1,5 @@
 import * as utils from "./utils.js";
+import * as basic from "./matrix_basic_operations.js"
 var n = 0;
 var matrix_a = [];
 var vector_b = [];
@@ -110,24 +111,31 @@ $(() => {
         $('#vector-x-table-body').append('</tr>')
     }
 
+    function draw_determinant(determinant){
+        $('#determinant-text').empty()
+        if ($("#check-determinant")[0].checked)
+            $('#determinant-text').append('<p> Determinant: '+determinant+' </p>')
+    }
+
     function solve(){
         switch ($('#icod').val()){
             case "1":
                 result_x = lu_decomposition()
         }
-        
+
         if(result_x != "Error")
             draw_result_x()
 
     }
 
     function lu_decomposition(){
-        if (utils.get_determinant(matrix_a) == 0){
+        var determinant = utils.get_determinant(matrix_a)
+        if (determinant == 0){
             print_error("Matrix can not be singular.")
             return "Error"
         }
 
-        var result = [...matrix_a]
+        var result = basic.clone(matrix_a)
         for(let k = 0; k < n; k++){
             for(let i = k+1; i < n; i++){
                 result[i][k] = result[i][k]/result[k][k]
@@ -140,7 +148,9 @@ $(() => {
     
         }
         let vector_y = utils.forward_substitution(result, vector_b)
-        let vector_x = utils.backward_substitution(utils.get_transposed(result), vector_y)
+        let vector_x = utils.backward_substitution(basic.get_transposed(result), vector_y)
+        
+        draw_determinant(determinant)
         return vector_x
     }    
 
