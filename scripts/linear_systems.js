@@ -122,6 +122,10 @@ $(() => {
         switch ($('#icod').val()){
             case "1":
                 result_x = lu_decomposition()
+                break
+            case "2":
+                result_x = cholesky_decomposition()
+                break
         }
 
         if(result_x != "Error")
@@ -180,7 +184,51 @@ $(() => {
         
         draw_determinant(determinant)
         return vector_x
-    }    
+    }
+    
+    function cholesky_decomposition(){
+        var determinant = utils.get_determinant(matrix_a)
+        if (determinant <= 0 || !utils.is_positive_definite(matrix_a)){
+            print_error("Matrix should be positive definite.")
+            return "Error"
+        }
+
+        var matrix_l = new Array(n)
+        
+        for (let i = 0; i < n; i++){
+            matrix_l[i] = new Array(n)
+            for(let j = 0; j<n; j++){
+                matrix_l[i][j] = 0
+            }
+        }
+
+        for(let i=0; i<matrix_a.length; i++){
+            for(let j=0; j < i + 1; j++){
+                let summation_principal = 0
+                let summation = 0
+                for(let k = 0; k <= i; k++){
+                    if (i == j){
+                        summation_principal += matrix_l[i][k]**2
+                    }
+                    summation += matrix_l[i][k] * matrix_l[j][k]
+                }
+                if(i == j){
+                    matrix_l[i][j] = +(Math.round((matrix_a[i][j]-summation_principal)**0.5  + "e+2")  + "e-2")
+                }else{
+                    matrix_l[i][j] = +(Math.round((1.0/matrix_l[j][j])*(matrix_a[i][j]-summation) + "e+2")  + "e-2")
+                }
+
+            }
+        }
+
+        let matrix_u = basic.get_transposed(matrix_l)
+        
+        console.log({L:matrix_l, U:matrix_u})
+        let vector_y = utils.forward_substitution(matrix_l, vector_b)
+        let vector_x = utils.backward_substitution(matrix_u, vector_y)
+
+        return vector_x
+    }
 
 }
 )

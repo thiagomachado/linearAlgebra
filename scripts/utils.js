@@ -19,14 +19,14 @@ function backward_substitution(matrix, vector_y){
     var n_rows = matrix.length
     var vector_x = new Array(n_rows)
     
-    vector_x[ n_rows-1] = vector_y[n_rows-1] /matrix[n_rows-1][n_rows-1]
+    vector_x[ n_rows-1] = +(Math.round((vector_y[n_rows-1] /matrix[n_rows-1][n_rows-1]) + "e+2")  + "e-2")
     
     for (let i = (n_rows - 2); i >= 0; i--) {
         var accumulation = vector_y[i]
         for(let j=i+1; j<n_rows; j++){
             accumulation -= matrix[i][j] * vector_x[j] 
         }
-        vector_x[i] = accumulation/matrix[i][i]
+        vector_x[i] = +(Math.round((accumulation/matrix[i][i]) + "e+2")  + "e-2")
     }
     return vector_x
 }
@@ -69,4 +69,40 @@ function cofactor(matrix, column) {
     return (column % 2 ? -1 : 1) * get_determinant(sub_matrix);
 }
 
-export {backward_substitution, forward_substitution, get_determinant}
+
+function is_positive_definite(matrix){
+    return (is_simetric(matrix) && sylvesters_criterion(matrix))   
+}
+
+function is_simetric(matrix){
+    for (let i = 0; i < matrix.length; i++){
+        for(let j = 0; j < matrix.length; j++){
+            if(matrix[i][j] != matrix[j][i]){
+                return false
+            }
+        }
+    }
+    return true
+}
+
+function sylvesters_criterion(matrix){
+
+    for (let dimension = 1; dimension < matrix.length; dimension ++){
+        let minor_matrix = []
+        for (let i = 0; i < dimension; i++){
+            let row_minor = []
+            for(let j =0; j < dimension; j++){
+                row_minor.push(matrix[i][j])
+            }
+            minor_matrix.push(row_minor)
+        }
+        let minor_determinant = get_determinant(minor_matrix)
+        if (minor_determinant <= 0){
+            return false
+        }
+    }
+    return true
+
+}
+
+export {backward_substitution, forward_substitution, get_determinant, is_positive_definite}
