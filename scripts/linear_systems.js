@@ -5,6 +5,7 @@ var n = 0;
 var matrix_a = [];
 var vector_b = [];
 var result_x = [];
+var tolerance = 0;
 
 $(() => {
     
@@ -52,6 +53,10 @@ $(() => {
         }else{
             print_error('Expected ' + n + ' elements in vector B, but found '+vector_elements.length)
         }
+    })
+
+    $("#max-tolerance").bind('input propertychange', function() {
+        tolerance = parseFloat(this.value)
     })
 
     $('#solve').click(function() {solve()})
@@ -125,6 +130,9 @@ $(() => {
                 break
             case "2":
                 result_x = cholesky_decomposition()
+                break
+            case "3":
+                result_x = jacobi_iterative()
                 break
         }
 
@@ -229,6 +237,55 @@ $(() => {
 
         draw_determinant(determinant)
         return vector_x
+    }
+
+    function jacobi_iterative(){
+        if(!utils.is_diagonal_dominant(matrix_a)){
+            print_error("Matrix should be diagonal dominant.")
+            return "Error"
+        }
+        let residue = 1
+        let step = 0
+        let dimension = matrix_a.length
+        let previous_solution = []
+        let solution = []
+
+        for (let i = 0; i < dimension; i++){
+            previous_solution.push(1)
+            solution.push(0)
+        }
+
+        while(residue > tolerance){
+            let numerator = 0
+            let denominator = 0
+
+            for (let i = 0; i < dimension; i++){
+                solution[i] = vector_b[i]
+
+                for (let j = 0; j < dimension; j++){
+                    if(i != j){
+                        solution[i] += (-1)*(matrix_a[i][j] * previous_solution[j])
+                    }
+                }
+                solution[i] = solution[i]/ matrix_a[i][i]
+            }
+
+            for (let i = 0; i < dimension; i++){
+                numerator += (solution[i] - previous_solution[i])**2
+                denominator += solution[i]**2
+            }
+
+            residue = numerator**0.5 / denominator**0.5
+            for (let i = 0; i < dimension; i++){
+                previous_solution[i] = solution[i]
+            }
+            step += 1
+
+            console.log({step:step, residue:residue, solution:solution})
+        }
+        if ($("#check-determinant")[0].checked)
+            draw_determinant(utils.get_determinant(matrix_a))
+        return solution
     }
 
 }

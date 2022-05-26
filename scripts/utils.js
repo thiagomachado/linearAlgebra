@@ -105,4 +105,21 @@ function sylvesters_criterion(matrix){
 
 }
 
-export {backward_substitution, forward_substitution, get_determinant, is_positive_definite}
+function is_diagonal_dominant(matrix){
+    for (let i = 0; i < matrix.length; i++){
+        let line_sum = 0
+        let column_sum = 0
+        for(let j = 0; j < matrix.length; j++){
+            if(i != j){
+                line_sum += Math.abs(matrix[i][j])
+                column_sum += Math.abs(matrix[j][i])
+            }
+        }
+        if(matrix[i][i] < line_sum || matrix[i][i] < column_sum){
+            return false
+        }
+    }
+    return true
+}
+
+export {backward_substitution, forward_substitution, get_determinant, is_positive_definite, is_diagonal_dominant}
