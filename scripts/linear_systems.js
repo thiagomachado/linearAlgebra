@@ -116,27 +116,35 @@ $(() => {
                 result_x = lu_decomposition()
         }
         
-        draw_result_x()
+        if(result_x != "Error")
+            draw_result_x()
 
+    }
+
+    function lu_decomposition(){
+        if (utils.get_determinant(matrix_a) == 0){
+            print_error("Matrix can not be singular.")
+            return "Error"
+        }
+
+        var result = [...matrix_a]
+        for(let k = 0; k < n; k++){
+            for(let i = k+1; i < n; i++){
+                result[i][k] = result[i][k]/result[k][k]
+            }
+            for(let j= k+1; j < n; j++){
+                for(let i = k+1; i < n; i++){
+                    result[i][j] = result[i][j]-result[i][k]*result[k][j]
+                }
+            }
+    
+        }
+        let vector_y = utils.forward_substitution(result, vector_b)
+        let vector_x = utils.backward_substitution(utils.get_transposed(result), vector_y)
+        return vector_x
     }    
 
 }
 )
 
-function lu_decomposition(){
-    var result = [...matrix_a]
-    for(let k = 0; k < n; k++){
-        for(let i = k+1; i < n; i++){
-            result[i][k] = result[i][k]/result[k][k]
-        }
-        for(let j= k+1; j < n; j++){
-            for(let i = k+1; i < n; i++){
-                result[i][j] = result[i][j]-result[i][k]*result[k][j]
-            }
-        }
 
-    }
-    let vector_y = utils.forward_substitution(result, vector_b)
-    let vector_x = utils.backward_substitution(utils.get_transposed(result), vector_y)
-    return vector_x
-}

@@ -1,7 +1,3 @@
-export function hello() {
-    return "Hello";
-  }
-
 function get_transposed(matrix){
     var n_rows = matrix.length
     var transposed = new Array(n_rows)
@@ -47,4 +43,43 @@ function backward_substitution(matrix, vector_y){
     return vector_x
 }
 
-export {backward_substitution, forward_substitution, get_transposed}
+function get_determinant(matrix) {
+    var n = matrix.length;
+
+    if (n === 1) {
+        return matrix[0][0];
+    }
+
+    if (n === 2) {
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+    }
+
+    var determinant = 0;
+
+    for (var j = 0; j < n; j++) {
+        determinant += matrix[0][j] * cofactor(matrix, j);
+    }
+
+    return determinant;
+}
+
+function cofactor(matrix, column) {
+    var sub_matrix = [];
+    var n = matrix.length;
+    var m = 0;
+
+    for (var i = 1; i < n; i++) {
+        sub_matrix[m] = [];
+
+        for (var j = 0; j < n; j++) {
+            if (j !== column) {
+                sub_matrix[m].push(matrix[i][j]);
+            }
+        }
+        m++;
+    }
+
+    return (column % 2 ? -1 : 1) * get_determinant(sub_matrix);
+}
+
+export {backward_substitution, forward_substitution, get_transposed, get_determinant}
