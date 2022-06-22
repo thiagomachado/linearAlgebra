@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="extra_script/jquery-3.6.0-min.js"></script>
+    <script src="extra_script/bootstrap.bundle.min.js"></script>
+    <script type="module" src="scripts/newton_broyden.js"></script> 
+    <title>Linear Algebra Problems Solver</title>
+  </head>
+  <body>
+    
+    <h1>Systems Solver</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <form>
+            <div class="mb-3">
+              <label for="matrix-order" class="form-label">Matrix Order:</label>
+              <input type="number" class="form-control" id="matrix-order" min="1" aria-describedby="matrix-order-help">
+              <div id="matrix-order-help" class="form-text">Inform N to a matrix NxN.</div>
+            </div>
+            <div class="mb-3">
+              <label for="matrix-a-elements" class="form-label">Matrix Elements:</label>
+              <input class="form-control" id="matrix-a-elements" aria-describedby="matrix-elements-help">
+              <div id="matrix-elements-help" class="form-text">Inform the elements of the matrix A separated by ','. Eg: 1,2,3,4 for the 2x2 matrix with 1 and 2 in the first line and 3 and 4 in the second line. </div>
+            </div>
+            <div class="mb-3">
+              <label for="vector-b-elements" class="form-label">Vector Elements:</label>
+              <input class="form-control" id="vector-b-elements" aria-describedby="vector-b-elements-help">
+              <div id="vector-b-elements" class="form-text">Inform the elements of the vector B separated by ','. Eg: 1,2,3,4</div>
+            </div>
+            <div class="mb-3">
+              <label for="icod" class="form-label">ICOD:</label>
+              <select id="icod" class="form-select" aria-label="Default select example">               
+                <option value="1">1 - LU decomposition</option>
+                <option value="2">2 - Cholesky's decomposition</option>
+                <option value="3">3 - Jacobi's interative procedure</option>
+                <option value="4">4 - Gauss-Seidel iterative procedure</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="max-tolerance" class="form-label">Max Tolerance:</label>
+              <input type="number" class="form-control" id="max-tolerance" min="0" >
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="check-determinant">
+              <label class="form-check-label" for="exampleCheck1">Check to calculate Determinant</label>
+            </div>
+            <div  class="mb-3" id="matrix-a-div">
+                <table id="matrix-a-table" class="table table-sm table-striped">
+                  <thead id="matrix-a-table-head">
+                    
+                  </thead>
+                  <tbody id="matrix-a-table-body">
+                    
+                  </tbody>
+                </table>
+            </div>
+            <div  class="mb-3" id="vector-b-div">
+              <table id="vector-b-table" class="table table-sm table-striped">
+                <thead id="vector-b-table-head">
+                  
+                </thead>
+                <tbody id="vector-b-table-body">
+                  
+                </tbody>
+              </table>
+            </div>
+            <div class="mb-3" id="error-div">
+              
+            </div>
+            <button type='button' id="solve" class="btn btn-primary" >Solve</button>
+            <a href="index.html" class="btn btn-danger">Back</a>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div id="results">
+            <div  class="mb-3" id="vector-x-div">
+              <div id="determinant-text"></div>
+              <table id="vector-x-table" class="table table-sm table-striped">
+                <thead id="vector-x-table-head">
+                  
+                </thead>
+                <tbody id="vector-x-table-body">
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>                    
+    </div>
+    
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer.js"></script>
+  </body>
+</html>
