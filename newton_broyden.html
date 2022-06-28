@@ -8,46 +8,36 @@
     <script src="extra_script/jquery-3.6.0-min.js"></script>
     <script src="extra_script/bootstrap.bundle.min.js"></script>
     <script type="module" src="scripts/newton_broyden.js"></script> 
-    <title>Linear Algebra Problems Solver</title>
+
+    <title>Linear and Non-Linear Problems Solver</title>
   </head>
   <body>
     
-    <h1>Systems Solver</h1>
+    <h1>Newton and Broyden</h1>
     <div class="container">
       <div class="row">
         <div class="col">
           <form>
             <div class="mb-3">
-              <label for="matrix-order" class="form-label">Matrix Order:</label>
-              <input type="number" class="form-control" id="matrix-order" min="1" aria-describedby="matrix-order-help">
-              <div id="matrix-order-help" class="form-text">Inform N to a matrix NxN.</div>
-            </div>
-            <div class="mb-3">
-              <label for="matrix-a-elements" class="form-label">Matrix Elements:</label>
-              <input class="form-control" id="matrix-a-elements" aria-describedby="matrix-elements-help">
-              <div id="matrix-elements-help" class="form-text">Inform the elements of the matrix A separated by ','. Eg: 1,2,3,4 for the 2x2 matrix with 1 and 2 in the first line and 3 and 4 in the second line. </div>
-            </div>
-            <div class="mb-3">
-              <label for="vector-b-elements" class="form-label">Vector Elements:</label>
-              <input class="form-control" id="vector-b-elements" aria-describedby="vector-b-elements-help">
-              <div id="vector-b-elements" class="form-text">Inform the elements of the vector B separated by ','. Eg: 1,2,3,4</div>
+              <label for="equation-1" class="form-label">System:</label>            
+              <div id="equation-1" class="form-text">X^2 + 2Y^2 + 6Z^2 = 1.0</div>
+              <div id="equation-2" class="form-text">8Y^3 + 6YX^2 + 36YXZ + 108YZ^2 = 
+                <input id="teta-1" aria-describedby="matrix-elements-help" required type="number" step="0.1">
+              </div>
+              <div id="equation-3" class="form-text">60Y^4 60Y^2X^2 + 576Y^2XZ + 2232Y^2Z^2 + 252Z^2X^2 + 1296Z^3X + 3348Z^4 + 24X^3Z + 3X = 
+                <input id="teta-2" aria-describedby="matrix-elements-help" required type="number" step="0.1">
+              </div>
             </div>
             <div class="mb-3">
               <label for="icod" class="form-label">ICOD:</label>
               <select id="icod" class="form-select" aria-label="Default select example">               
-                <option value="1">1 - LU decomposition</option>
-                <option value="2">2 - Cholesky's decomposition</option>
-                <option value="3">3 - Jacobi's interative procedure</option>
-                <option value="4">4 - Gauss-Seidel iterative procedure</option>
+                <option value="1">1 - Newton</option>
+                <option value="2">2 - Broyden</option>
               </select>
             </div>
             <div class="mb-3">
               <label for="max-tolerance" class="form-label">Max Tolerance:</label>
               <input type="number" class="form-control" id="max-tolerance" min="0" >
-            </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="check-determinant">
-              <label class="form-check-label" for="exampleCheck1">Check to calculate Determinant</label>
             </div>
             <div  class="mb-3" id="matrix-a-div">
                 <table id="matrix-a-table" class="table table-sm table-striped">
