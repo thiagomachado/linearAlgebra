@@ -12,3 +12,11 @@ A [Electron](http://electron.atom.io) application to linear algebra.
 
 ## Generating a app
 - `npm run make`
+
+
+## FIX 
+- Choleski gives wrong result
+- Calculate determinant with det(a) = det(L) det(U)
+
+## TODO 
+- Add an option for import inputs from file 
