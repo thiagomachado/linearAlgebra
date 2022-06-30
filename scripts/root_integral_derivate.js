@@ -8,7 +8,7 @@ $(() => {
     a = 0
     b = 1
     maxIter = 20
-    deltaX1 = 0.5
+    deltaX = 0.5
     deltaX2 = 0.5
     TOLm = 0
     point = 0 
@@ -75,6 +75,16 @@ $(() => {
 
 
 
+    function  RichardExtrapolationDerivative(c1,c2,c3,c4,point,delta_x1,delta_x2){
+        result_delta_x1=forward_step(c1,c2,c3,c4,point,delta_x1)
+        result_delta_x2=forward_step(c1,c2,c3,c4,point,delta_x2)
+
+        q = result_delta_x1/result_delta_x2
+        p = 1
+
+        richard_solution = result_delta_x1 + (result_delta_x1 - result_delta_x2)/(q**(-p) - 1)
+        return richard_solution
+    }
 
 
     //extracted and translated to js from https://pomax.github.io/bezierinfo/legendre-gauss.html
