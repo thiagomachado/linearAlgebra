@@ -7,7 +7,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script src="extra_script/jquery-3.6.0-min.js"></script>
     <script src="extra_script/bootstrap.bundle.min.js"></script>
-    <script type="module" src="scripts/newton_broyden.js"></script> 
+    <script type="module" src="scripts/newton_broyden.js"></script>
 
     <title>Linear and Non-Linear Problems Solver</title>
   </head>
@@ -21,11 +21,11 @@
             <div class="mb-3">
               <label for="equation-1" class="form-label">System:</label>            
               <div id="equation-1" class="form-text">X &#xB2; + 2Y&#xB2; + 6Z&#xB2; = 1.0</div>
-              <div id="equation-2" class="form-text">8Y^3 + 6YX&#xB2; + 36YXZ + 108YZ&#xB2; = 
-                <input id="teta-1" aria-describedby="matrix-elements-help" required type="number" step="0.1" placeholder="teta1">
+              <div id="equation-2" class="form-text">8Y&#xB3; + 6YX&#xB2; + 36YXZ + 108YZ&#xB2; = 
+                <input id="teta-1" aria-describedby="matrix-elements-help" required type="number" step="0.1" placeholder="teta1" value="0">
               </div>
               <div id="equation-3" class="form-text">60Y&#8308; 60Y&#xB2;X&#xB2; + 576Y&#xB2;XZ + 2232Y&#xB2;Z&#xB2; + 252Z&#xB2;X&#xB2; + 1296Z&#xB3;X + 3348Z&#8308; + 24X&#xB3;Z + 3X = 
-                <input id="teta-2" aria-describedby="matrix-elements-help" required type="number" step="0.1" placeholder="teta2">
+                <input id="teta-2" aria-describedby="matrix-elements-help" required type="number" step="0.1" placeholder="teta2" value="0">
               </div>
             </div>
             <div class="mb-3">
@@ -38,26 +38,6 @@
             <div class="mb-3">
               <label for="max-tolerance" class="form-label">Max Tolerance:</label>
               <input type="number" class="form-control" id="max-tolerance" min="0" >
-            </div>
-            <div  class="mb-3" id="matrix-a-div">
-                <table id="matrix-a-table" class="table table-sm table-striped">
-                  <thead id="matrix-a-table-head">
-                    
-                  </thead>
-                  <tbody id="matrix-a-table-body">
-                    
-                  </tbody>
-                </table>
-            </div>
-            <div  class="mb-3" id="vector-b-div">
-              <table id="vector-b-table" class="table table-sm table-striped">
-                <thead id="vector-b-table-head">
-                  
-                </thead>
-                <tbody id="vector-b-table-body">
-                  
-                </tbody>
-              </table>
             </div>
             <div class="mb-3" id="error-div">
               
