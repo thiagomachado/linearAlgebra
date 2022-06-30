@@ -35,11 +35,17 @@ function get_transposed(matrix){
 }
 
 //A+B = C. Sum of each correspondent element
-function sum_matrix(matrix_a, matrix_b){
+function sum_matrix(matrix_a, matrix_b, is_vector){
     let matrix_c = [];
         
     let n_rows_c = matrix_a.length;
     let n_columns_c = matrix_a[0].length;
+    if(is_vector){
+        for (let i = 0; i < n_rows_c; i++) {
+            matrix_c.push(parseFloat(matrix_a[i]) + parseFloat(matrix_b[i]))
+        }
+        return matrix_c
+    }
 
     for (let i = 0; i < n_rows_c; i++) {
         let row = [];
@@ -66,6 +72,25 @@ function subtract_matrix(matrix_a, matrix_b){
         
         for (let j = 0; j < n_columns_c; j++) {
             row.push(matrix_a[i][j] - matrix_b[i][j]);
+        }
+        
+        matrix_c.push(row);
+    }
+    
+    return matrix_c;
+}
+
+function multiply_matrix_scalar(matrix_a, x){
+    let matrix_c = [];
+        
+    let n_rows_c = matrix_a.length;
+    let n_columns_c = matrix_a[0].length;
+
+    for (let i = 0; i < n_rows_c; i++) {
+        let row = [];
+        
+        for (let j = 0; j < n_columns_c; j++) {
+            row.push(matrix_a[i][j] * x);
         }
         
         matrix_c.push(row);
@@ -109,4 +134,12 @@ function multiply_matrix(matrix_a, matrix_b, is_b_vector){
     return matrix_c;
 }
 
-export {sum_matrix, subtract_matrix, multiply_matrix, get_identity, get_transposed, clone}
+function norm_vector(v){
+    var sum = 0
+    for (let i = 0; i < v.length; i++) {
+        sum += parseFloat(v[i])**2
+    }
+    return Math.sqrt(sum)
+}
+
+export {sum_matrix, subtract_matrix, multiply_matrix, get_identity, get_transposed, clone, multiply_matrix_scalar, norm_vector}
