@@ -1,6 +1,3 @@
-//extracted and translated to js from https://pomax.github.io/bezierinfo/legendre-gauss.html
-
-
 
 $(() => {
 
@@ -10,14 +7,11 @@ $(() => {
     c4 = 3
     a = 0
     b = 1
-    epsilon = 5*10**-4
     maxIter = 20
-    x0 = 1
-    numeroPontos = 5
-    deltax1 = 0.5
-    deltax2 = 0.25
-    p = 1
+    deltaX1 = 0.5
+    deltaX2 = 0.5
     TOLm = 0
+    point = 0 
 
 
     function F(c1,c2,c3,c4,X){
@@ -63,7 +57,27 @@ $(() => {
     }
 
 
+    //ponto, delta, decidir se vai ser 12ou3
+    function forward_step(c1,c2,c3,c4,point,delta_x){
+        derivative = (F(c1,c2,c3,c4, point + delta_x) - F(c1,c2,c3,c4, point)) / delta_x
+        return derivative
+    }
 
+    function backward_step(c1,c2,c3,c4,point,delta_x){
+        derivative = (F(c1,c2,c3,c4,point) - F(c1,c2,c3,c4,point - delta_x)) / delta_x
+        return derivative
+    }
+
+    function central_difference(c1,c2,c3,c4,point,delta_x){
+        derivative = (F(c1,c2,c3,c4,point+ self.delta_x) - sF(c1,c2,c3,c4,point - delta_x)) / (2 * delta_x)
+        return derivative
+    }
+
+
+
+
+
+    //extracted and translated to js from https://pomax.github.io/bezierinfo/legendre-gauss.html
     gauss_legendre_quadrature = {
         2: {
           'points': [-0.577350269189626, 0.577350269189626],
