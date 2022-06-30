@@ -24,25 +24,25 @@ $(() => {
         return (f(m,c,k,a1,a2,a3,w1,w2,w3,t) - c*dx - k*x)/m
     }
 
-    function solve(m,c,k,a1,a2,a3,w1,w2,w3){
+    function runge_kutta(m,c,k,a1,a2,a3,w1,w2,w3,step, total_time){
         dy = y = t = 0
-        half_step = self.step / 2
+        half_step = step / 2
         // t = tempo, y = deslocamento, dy = velocidade, dyy = aceleração
-        t0_moment = {'tempo': t, 'deslocamento': y, 'velocidade': dy, 'aceleracao': self.F_derivative(t, y, dy)} 
+        t0_moment = {'tempo': t, 'deslocamento': y, 'velocidade': dy, 'aceleracao': f_derivative(m,c,k,a1,a2,a3,w1,w2,w3,t, y, dy)} 
         moments = [t0_moment]
-        for (var i = 0; i < int(total_time / step); i++) {
-            K1 = half_step * self.F_derivative(m,c,k,a1,a2,a3,w1,w2,w3,t, y, dy)
+        for (var i = 0; i < parseInt(total_time / step); i++) {
+            K1 = half_step * f_derivative(m,c,k,a1,a2,a3,w1,w2,w3,t, y, dy)
             Q = half_step * (dy+1/2*K1)
-            K2 = half_step * self.F_derivative(m,c,k,a1,a2,a3,w1,w2,w3,t+half_step, y+Q, dy+K1)
-            K3 = half_step * self.F_derivative(m,c,k,a1,a2,a3,w1,w2,w3,t+half_step, y+Q, dy+K2)
-            L = self.step*(dy+K3)
-            K4 = half_step * self.F_derivative(m,c,k,a1,a2,a3,w1,w2,w3,t+self.step, y+L, dy+2*K3)
+            K2 = half_step * f_derivative(m,c,k,a1,a2,a3,w1,w2,w3,t+half_step, y+Q, dy+K1)
+            K3 = half_step * f_derivative(m,c,k,a1,a2,a3,w1,w2,w3,t+half_step, y+Q, dy+K2)
+            L = half_step*(dy+K3)
+            K4 = half_step * f_derivative(m,c,k,a1,a2,a3,w1,w2,w3,t+step, y+L, dy+2*K3)
 
             // now increment Y, Y' and T
-            y += self.step*(dy+(1/3)*(K1+K2+K3))
+            y += half_step*(dy+(1/3)*(K1+K2+K3))
             dy += 1/3*(K1+2*K2+2*K3+K4)
-            t += self.step
-            moments.append({'tempo': t, 'deslocamento': y, 'velocidade': dy, 'aceleracao': self.F_derivative(t, y, dy)})
+            t += step
+            moments.push({'tempo': t, 'deslocamento': y, 'velocidade': dy, 'aceleracao': f_derivative(m,c,k,a1,a2,a3,w1,w2,w3,t, y, dy)})
         }
         return moments 
     }
