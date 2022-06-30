@@ -229,7 +229,7 @@ $(() => {
             }
         }
 
-        let matrix_u = basic.get_transposed(matrix_l)
+        let matrix_u = basic.get_transposed(matrix_l, false)
         
         console.log({L:matrix_l, U:matrix_u})
         let vector_y = utils.forward_substitution(matrix_l, vector_b)

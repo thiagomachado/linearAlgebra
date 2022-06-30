@@ -32,22 +32,20 @@ $(() => {
     })
 
     function solve(){
+        $('#error-div').empty()
+        redraw_result_table()
         switch ($('#icod').val()){
-            case "1":
-                redraw_result_table()
-                result_x = newton()
+            case "1":               
+                result_x = get_newton()
                 break
             case "2":
-                result_x = broyden()
+                result_x = get_broyden()
                 break
         }
 
-        // if(result_x != "Error")
-        //     draw_result_x()
-
     }
 
-    function newton(){
+    function get_newton(){
         var k = Number.MAX_SAFE_INTEGER
         var max_iter = 200
         var x = x0
@@ -61,16 +59,61 @@ $(() => {
             Jacobian = get_jacobian(x[0],x[1],x[2])
             var JacobianInv = utils.inverse(basic.clone(Jacobian))
             var F = get_function_vector(x[0],x[1],x[2])
-            var dX = basic.multiply_matrix_scalar(basic.multiply_matrix(JacobianInv,F,true),-1)
+            var dX = basic.multiply_matrix_scalar(basic.multiply_matrix(JacobianInv,F,true),-1, false)
             var xnext = basic.sum_matrix(x, dX, true)
             k = basic.norm_vector(dX)/basic.norm_vector(x)
             x = xnext
             max_iter -= 1
             draw_result_x(200-max_iter, x[0],x[1],x[2],k)
         }
-        console.log(x)
         return x
         
+    }
+
+    function get_broyden(){
+        var k = Number.MAX_SAFE_INTEGER
+        var max_iter = 300
+        var x = x0
+        var Jacobian = get_jacobian(x[0],x[1],x[2])
+        var B = basic.clone(Jacobian)
+        var F = get_function_vector(x[0],x[1],x[2])
+        draw_result_x(0,x[0],x[1],x[2],"-")
+
+        while(k > tolerance){
+            if (max_iter < 0){
+                print_error("Convergence not reached")
+                return "Error"
+            }
+            Jacobian = B
+            var JacobianInv = utils.inverse(basic.clone(Jacobian))
+            
+            var dX = basic.multiply_matrix_scalar(basic.multiply_matrix(JacobianInv,F,true),-1, false)
+            var xnext = basic.sum_matrix(x, dX, true)
+            var Fnext = get_function_vector(xnext[0], xnext[1], xnext[2])
+            k = basic.norm_vector(dX)/basic.norm_vector(x)
+            x = xnext
+            max_iter -= 1
+            var Y = basic.sum_matrix(Fnext, basic.multiply_matrix_scalar(F,-1,true),true)
+            var dXT = basic.get_transposed(dX, false)
+            var BdX = basic.multiply_matrix(Jacobian, dX, false)
+            var negativeBdx = basic.multiply_matrix_scalar(BdX, -1, false)
+            var YBdX = basic.sum_matrix(Y, negativeBdx, true)
+            var numerator = basic.multiply_matrix(YBdX, dXT, false)
+            var denominator = basic.multiply_matrix(dXT,dX, false)
+            var aux = []
+            for (let i=0; i<numerator.length; i++){
+                var row = []
+                for (let j=0; j<numerator.length; j++){
+                    var d = numerator[i][j]/denominator[i][j]
+                    row.push(d)
+                }
+                aux.push(row)
+            }
+            B = basic.sum_matrix(B, aux, false)
+            draw_result_x(300-max_iter, x[0],x[1],x[2],k)
+        }
+        return x
+
     }
 
     function get_jacobian(c2, c3, c4){
