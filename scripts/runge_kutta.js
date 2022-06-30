@@ -1,5 +1,3 @@
-import * as utils from "./utils.js";
-import * as basic from "./matrix_basic_operations.js"
 
 var m = 0
 var c = 0
@@ -16,6 +14,48 @@ var step = 0
 
 $(() => {
 
+    $('#m').bind('input propertychange', function() {
+        m = parseFloat(this.value)
+    })
+
+    $('#c').bind('input propertychange', function() {
+        c = parseFloat(this.value)
+    })
+
+    $('#k').bind('input propertychange', function() {
+        k = parseFloat(this.value)
+    })
+    $('#a1').bind('input propertychange', function() {
+        a1 = parseFloat(this.value)
+    })
+    $('#a2').bind('input propertychange', function() {
+        a2 = parseFloat(this.value)
+    })
+    $('#a3').bind('input propertychange', function() {
+        a3 = parseFloat(this.value)
+    })
+    $('#w1').bind('input propertychange', function() {
+        w1 = parseFloat(this.value)
+    })
+    $('#w2').bind('input propertychange', function() {
+        w2 = parseFloat(this.value)
+    })
+    $('#w3').bind('input propertychange', function() {
+        w3 = parseFloat(this.value)
+    })
+
+    $('#integration-step').bind('input propertychange', function() {
+        step = parseFloat(this.value)
+    })
+
+    $('#total-time-integration').bind('input propertychange', function() {
+        total_time = parseFloat(this.value)
+    })
+
+    $('#solve').click(function() {
+        console.log(solve(m,c,k,a1,a2,a3,w1,w2,w3))
+    })
+    
     function f(m,c,k,a1,a2,a3,w1,w2,w3,t){
         return a1*Math.sin(w1*t) + a2*Math.sin(w2*t) + a3*Math.cos(w3*t)
     }
@@ -46,11 +86,6 @@ $(() => {
         }
         return moments 
     }
-
-
-
-
-
 
 }
 )
