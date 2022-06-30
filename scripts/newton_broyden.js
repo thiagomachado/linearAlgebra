@@ -86,29 +86,21 @@ $(() => {
             }
             Jacobian = B
             var JacobianInv = utils.inverse(basic.clone(Jacobian))
-            
-            var dX = basic.multiply_matrix_scalar(basic.multiply_matrix(JacobianInv,F,true),-1, false)
+            var negativeJInv = basic.multiply_matrix_scalar(JacobianInv,-1,false)
+            var dX = basic.multiply(negativeJInv,F)
             var xnext = basic.sum_matrix(x, dX, true)
             var Fnext = get_function_vector(xnext[0], xnext[1], xnext[2])
             k = basic.norm_vector(dX)/basic.norm_vector(x)
             x = xnext
             max_iter -= 1
-            var Y = basic.sum_matrix(Fnext, basic.multiply_matrix_scalar(F,-1,true),true)
+            var Y = basic.sum_matrix(Fnext, basic.multiply_matrix_scalar(F,-1,false),false)
             var dXT = basic.get_transposed(dX, false)
-            var BdX = basic.multiply_matrix(Jacobian, dX, false)
+            var BdX = basic.multiply(Jacobian, dX)
             var negativeBdx = basic.multiply_matrix_scalar(BdX, -1, false)
-            var YBdX = basic.sum_matrix(Y, negativeBdx, true)
-            var numerator = basic.multiply_matrix(YBdX, dXT, false)
-            var denominator = basic.multiply_matrix(dXT,dX, false)
-            var aux = []
-            for (let i=0; i<numerator.length; i++){
-                var row = []
-                for (let j=0; j<numerator.length; j++){
-                    var d = numerator[i][j]/denominator[i][j]
-                    row.push(d)
-                }
-                aux.push(row)
-            }
+            var YBdX = basic.sum_matrix(Y, negativeBdx, false)
+            var numerator = basic.multiply(YBdX, dXT)
+            var denominator = basic.multiply(dXT, dX)
+            var aux = basic.multiply_matrix_scalar(numerator, 1/denominator[0][0], false)
             B = basic.sum_matrix(B, aux, false)
             draw_result_x(300-max_iter, x[0],x[1],x[2],k)
         }
