@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="extra_script/jquery-3.6.0-min.js"></script>
+    <script src="extra_script/bootstrap.bundle.min.js"></script>
+    <script type="module" src="scripts/newton_broyden.js"></script>
+
+    <title>Linear and Non-Linear Problems Solver</title>
+  </head>
+  <body>
+    
+    <h1>Newton and Broyden</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <form>
+            <input id="c1" aria-describedby="matrix-elements-help" required type="number" step="0.1" placeholder="c1" >
+            <input id="c2" aria-describedby="matrix-elements-help" required type="number" step="0.1" placeholder="c2" >
+            <input id="c3" aria-describedby="matrix-elements-help" required type="number" step="0.1" placeholder="c3" >
+            <input id="c4" aria-describedby="matrix-elements-help" required type="number" step="0.1" placeholder="c4" >
+            <input id="a" aria-describedby="matrix-elements-help" required type="number" step="0.1" placeholder="a" >
+            <input id="b" aria-describedby="matrix-elements-help" required type="number" step="0.1" placeholder="b" >
+            
+            <div class="mb-3">
+              <label for="icod" class="form-label">ICOD:</label>
+              <select id="icod" class="form-select" aria-label="Default select example">               
+                <option value="1">1 - Bissection</option>
+                <option value="2">2 - Newton</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="max-tolerance" class="form-label">Max Tolerance:</label>
+              <input type="number" class="form-control" id="max-tolerance" min="0" >
+            </div>
+            <div class="mb-3">
+                <label for="max-iterations" class="form-label">Max Iterations:</label>
+                <input type="number" class="form-control" id="max-tolerance" min="0" >
+              </div>
+            <div class="mb-3" id="error-div">
+              
+            </div>
+            <button type='button' id="solve" class="btn btn-primary" >Solve</button>
+            <a href="index.html" class="btn btn-danger">Back</a>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div id="results">
+            <div  class="mb-3" id="vector-x-div">
+              <div id="determinant-text"></div>
+              <table id="vector-x-table" class="table table-sm table-striped">
+                <thead id="vector-x-table-head">
+                  
+                </thead>
+                <tbody id="vector-x-table-body">
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>                    
+    </div>
+    
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer.js"></script>
+  </body>
+</html>

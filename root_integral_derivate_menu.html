@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="extra_script/bootstrap.bundle.min.js"></script>
+    <title>Linear and Non-Linear Problems Solver</title>
+  </head>
+  <body>
+    <h1>Welcome to Linear and Non-Linear Problems Solver!</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <h5 class="card-header">Root</h5>
+            <div class="card-body">
+              <p class="card-text text-justify">Find Root by Newton or Bissection method.</p>
+              <a href="root.html" class="btn btn-primary">Try</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <h5 class="card-header">Integral</h5>
+            <div class="card-body">
+              <p class="card-text text-justify"> ---- </p>
+              <a href="#" class="btn btn-primary">Try</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <h5 class="card-header">Derivate</h5>
+            <div class="card-body">
+              <p class="card-text text-justify">Obtains derivate by different methods</p>
+              <a href="#" class="btn btn-primary">Try</a>
+            </div>
+          </div>
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <h5 class="card-header">Richard Extrapolation</h5>
+            <div class="card-body">
+              <p class="card-text text-justify">Estimates derivate with Richard Extrapolation</p>
+              <a href="newton_broyden.html" class="btn btn-primary">Try</a>
+            </div>
+          </div>
+        </div>
+        
+    
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer.js"></script>
+  </body>
+</html>
