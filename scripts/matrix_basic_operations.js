@@ -29,8 +29,10 @@ function get_identity(dimension){
 
 function get_transposed(matrix, is_vector){
     var n_rows = matrix.length
-    var transposed = new Array(n_rows)
-    for(let i=0; i<n_rows;i++){
+    
+    var n_columns = matrix[0].length
+    var transposed = new Array(n_columns)
+    for(let i=0; i<n_columns;i++){
         
         if(is_vector){
             transposed[i] = []
@@ -167,4 +169,20 @@ function norm_vector(v){
     return Math.sqrt(sum)
 }
 
-export {sum_matrix, subtract_matrix, multiply_matrix, get_identity, get_transposed, clone, multiply_matrix_scalar, norm_vector}
+function multiply(a, b) {
+    var aNumRows = a.length, aNumCols = a[0].length,
+        bNumRows = b.length, bNumCols = b[0].length,
+        m = new Array(aNumRows);  // initialize array of rows
+    for (var r = 0; r < aNumRows; ++r) {
+      m[r] = new Array(bNumCols); // initialize the current row
+      for (var c = 0; c < bNumCols; ++c) {
+        m[r][c] = 0;             // initialize the current cell
+        for (var i = 0; i < aNumCols; ++i) {
+          m[r][c] += a[r][i] * b[i][c];
+        }
+      }
+    }
+    return m;
+  }
+
+export {sum_matrix, subtract_matrix, multiply_matrix, get_identity, get_transposed, clone, multiply_matrix_scalar, norm_vector, multiply}
